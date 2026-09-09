@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Entrenamiento | Desarrollo Web</title>
+  
+  <!-- Google Fonts: Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #a6192e;       /* Rojo carmesí */
+      --secondary-color: #222324;     /* Gris oscuro */
+      --txt-color: #222324;           /* Texto base */
+      --txt-color-dark: #1b1b1b;      /* Texto resaltado/Títulos */
+      
+      --bg-color: #f4f6f8;            /* Gris neutro muy claro para el fondo */
+      --card-bg: #ffffff;             /* Blanco para tarjetas y cabecera */
+      --border-radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--txt-color);
+      line-height: 1.6;
+    }
+
+    /* --- Header y Navegación --- */
+    .main-header {
+      background-color: var(--card-bg);
+      color: var(--txt-color-dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1rem 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container img {
+      max-height: 50px;
+      width: auto;
+    }
+
+    .logo-container .fallback-text {
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      color: var(--primary-color);
+    }
+
+    .main-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .main-nav a {
+      color: var(--txt-color-dark);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .main-nav a:hover {
+      color: var(--primary-color);
+    }
+
+    .main-nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+
+    .main-nav a:hover::after {
+      width: 100%;
+    }
+
+    /* --- Contenido Principal --- */
+    main {
+      max-width: 1000px;
+      margin: 3rem auto;
+      padding: 0 20px;
+    }
+
+    .welcome-section {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .welcome-section h1 {
+      color: var(--txt-color-dark);
+      margin-bottom: 1rem;
+      font-size: 2.2rem;
+    }
+
+    /* --- Secciones de Módulos --- */
+    .module-section {
+      margin-bottom: 4rem;
+      scroll-margin-top: 100px;
+    }
+
+    .module-title {
+      border-bottom: 3px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
+      color: var(--txt-color-dark);
+      font-size: 1.8rem;
+    }
+
+    /* --- Recursos de Estudio --- */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .resource-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border-top: 4px solid var(--secondary-color);
+    }
+
+    .resource-card h3 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .resource-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .resource-list li {
+      margin-bottom: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .resource-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .resource-list a {
+      color: var(--txt-color-dark);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+      line-height: 1.3;
+    }
+
+    .resource-list a:hover {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
+
+    /* --- Estandarización de Etiquetas (Tags) --- */
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-left: 28px; 
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Azul para idiomas */
+    .tag-lang { background-color: #e3f2fd; color: #1565c0; }
+    
+    /* Rojo para Videos / Cursos visuales */
+    .tag-video { background-color: #ffebee; color: #c62828; }
+    
+    /* Morado para Open Source */
+    .tag-os { background-color: #f3e5f5; color: #7b1fa2; }
+    
+    /* Amarillo para Libros / Lecturas extensas */
+    .tag-book { background-color: #fffde7; color: #f57f17; } /* F57F17 da mejor contraste sobre fondo amarillo claro que un amarillo puro */
+
+    /* Otros (Neutros/Opcionales) */
+    .tag-game { background-color: #e8f5e9; color: #2e7d32; } /* Verde para juegos/interactivos */
+    .tag-tool { background-color: #eceff1; color: #455a64; } /* Gris para herramientas */
+
+    /* Estado completado para Recursos */
+    .resource-list li.completed {
+      opacity: 0.5;
+    }
+    .resource-list li.completed a {
+      text-decoration: line-through;
+      color: #888;
+    }
+
+    /* --- Tarjetas de Ejercicios --- */
+    .exercise-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border-left: 5px solid var(--primary-color);
+      transition: all 0.3s ease;
+    }
+
+    .exercise-card:hover:not(.completed) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    }
+
+    .exercise-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .exercise-card-header h3 {
+      color: var(--txt-color-dark);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+
+    .exercise-card p {
+      margin-bottom: 0.8rem;
+    }
+
+    .exercise-card ul, .exercise-card ol {
+      margin-top: 0.5rem;
+      margin-left: 1.5rem;
+      color: var(--txt-color);
+    }
+
+    .exercise-card li {
+      margin-bottom: 0.5rem;
+    }
+
+    .exercise-card a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .exercise-card a:hover {
+      text-decoration: underline;
+    }
+
+    .badge {
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    code {
+      background-color: #eef0f2;
+      color: var(--primary-color);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      font-weight: 500;
+    }
+
+    /* Estilos globales para Checkboxes interactivos */
+    .task-check {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--primary-color);
+      margin-top: 2px;
+    }
+
+    .completion-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #f4f6f8;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--secondary-color);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .completion-label:hover {
+      background-color: #e2e6ea;
+    }
+
+    /* Estado completado para Ejercicios */
+    .exercise-card.completed {
+      opacity: 0.5;
+      filter: grayscale(80%);
+      border-left-color: #bdc3c7;
+      box-shadow: none;
+    }
+
+    /* --- Footer --- */
+    footer {
+      background-color: var(--secondary-color);
+      color: #f8f9fa;
+      text-align: center;
+      padding: 2.5rem 0;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .main-nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .exercise-card-header {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="header-container">
+      <div class="logo-container">
+        <img src="https://www.tambourine.com/assets/svg/logo-tambo-complete.svg" alt="Tambourine Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <span class="fallback-text" style="display: none;">Tambourine</span>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#recursos">Recursos</a></li>
+          <li><a href="#git-basico">Git</a></li>
+          <li><a href="#html-semantico">HTML</a></li>
+          <li><a href="#css-scss">CSS</a></li>
+          <li><a href="#js-basico">JavaScript</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="welcome-section">
+      <h1>Plan de Entrenamiento Desarrollo Web - Primer Contacto</h1>
+      <p>¡Bienvenido al Equipo de producción! Estamos contentos de tenerte con nosotros y que puedas empezar este maravilloso camino aquí en Tambourine. Aquí encontrarás tu ruta de ejercicios prácticos para afianzar tus conocimientos fundamentales en desarrollo web. Recuerda haber revisado la documentación previamente antes de empezar a codear.</p>
+    </section>
+
+    <!-- SECCIÓN DE RECURSOS -->
+    <section id="recursos" class="module-section">
+      <h2 class="module-title">📚 Material de Estudio Previo</h2>
+      <p style="margin-bottom: 2rem;">Revisa esta documentación antes de empezar los ejercicios. ¡Guárdalos en tus favoritos, te servirán todos los días!</p>
+      
+      <div class="resources-grid">
+        
+        <!-- Recursos HTML -->
+        <div class="resource-card">
+          <h3>HTML Semántico y General</h3>
+          <ul class="resource-list">
+            <li id="res-1">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-1" data-target="res-1">
+                <label for="chk-res-1"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content" target="_blank">Structuring content (MDN Oficial)</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Inglés / Español</span></div>
+            </li>
+            <li id="res-3">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-3" data-target="res-3">
+                <label for="chk-res-3"><a href="https://lenguajehtml.com/html/" target="_blank">LenguajeHTML - Guía para principiantes</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Español</span></div>
+            </li>
+
+            <li id="res-3">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-3" data-target="res-3">
+                <label for="chk-res-3"><a href="https://www.youtube.com/watch?v=MJkdaVFHrto" target="_blank">Curso de HTML</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Español</span><span class="tag tag-video">Video</span></div>
+            </li>
+            
+          </ul>
+        </div>
+
+        <!-- Recursos CSS Básico -->
+        <div class="resource-card">
+          <h3>Fundamentos CSS y Layout</h3>
+          <ul class="resource-list">
+            <li id="res-4">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-4" data-target="res-4">
+                <label for="chk-res-4"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Box_model" target="_blank">The Box Model (MDN Oficial)</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Inglés</span></div>
+            </li>
+            <li id="res-5">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-5" data-target="res-5">
+                <label for="chk-res-5"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design" target="_blank">Responsive Design (MDN Oficial)</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Inglés</span></div>
+            </li>
+            <li id="res-6">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-6" data-target="res-6">
+                <label for="chk-res-6"><a href="https://www.youtube.com/watch?v=rOQTEQkM96A" target="_blank">CSS Flexbox</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-video">Video</span> <span class="tag tag-lang">Inglés</span></div>
+            </li>
+            <li id="res-7">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-7" data-target="res-7">
+                <label for="chk-res-7"><a href="https://flexboxfroggy.com/" target="_blank">Flexbox Froggy (¡Aprende jugando!)</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-game">Juego</span> <span class="tag tag-lang">Multidioma</span></div>
+            </li>
+            <li id="res-8">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-8" data-target="res-8">
+                <label for="chk-res-8"><a href="https://www.youtube.com/playlist?list=PLg9145ptuAiiU_cjK8uIaCyYtQ6KmfXwD" target="_blank">CSS Grid Mini Curso</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-video">Video</span> <span class="tag tag-lang">Español</span></div>
+            </li>
+            <li id="res-9">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-9" data-target="res-9">
+                <label for="chk-res-9"><a href="https://cssgridgarden.com/" target="_blank">CSS Grid Garden (¡Aprende jugando!)</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-game">Juego</span> <span class="tag tag-lang">Multidioma</span></div>
+            </li>
+            <li id="res-4">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-4" data-target="res-4">
+                <label for="chk-res-4"><a href="https://css-tricks.com/a-complete-guide-to-css-media-queries/" target="_blank">Media Queries</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Inglés</span></div>
+            </li>
+            <li id="res-3">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-3" data-target="res-3">
+                <label for="chk-res-3"><a href="https://www.youtube.com/watch?v=wZniZEbPAzk" target="_blank">Curso de CSS</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Español</span><span class="tag tag-video">Video</span></div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Recursos Arquitectura CSS -->
+        <div class="resource-card">
+          <h3>Arquitectura CSS y Especificidad</h3>
+          <ul class="resource-list">
+            <li id="res-10">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-10" data-target="res-10">
+                <label for="chk-res-10"><a href="https://www.w3schools.com/css/css_specificity.asp" target="_blank">CSS Specificity (W3Schools)</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Inglés</span></div>
+            </li>
+            <li id="res-11">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-11" data-target="res-11">
+                <label for="chk-res-11"><a href="https://specificity.keegan.st/" target="_blank">Calculadora de Especificidad CSS</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-tool">Herramienta</span></div>
+            </li>
+            <li id="res-12">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-12" data-target="res-12">
+                <label for="chk-res-12"><a href="https://getbem.com/introduction/" target="_blank">Documentación Oficial de BEM</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Inglés</span> <span class="tag tag-os">Open Source</span></div>
+            </li>
+            <li id="res-13">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-13" data-target="res-13">
+                <label for="chk-res-13"><a href="https://www.arsys.es/blog/bem-guia-completa-para-css-modular-con-ejemplos" target="_blank">BEM: Guía completa (Arsys)</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Español</span></div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Recursos JavaScript -->
+        <div class="resource-card">
+          <h3>JavaScript Básico</h3>
+          <ul class="resource-list">
+            <li id="res-15">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-15" data-target="res-15">
+                <label for="chk-res-15"><a href="https://aprendejavascript.org/" target="_blank">Aprende JavaScript (Curso Completo)</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Español</span> <span class="tag tag-os">Open Source</span></div>
+            </li>
+            <li id="res-16">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-16" data-target="res-16">
+                <label for="chk-res-16"><a href="https://eloquentjavascript.es/" target="_blank">Libro: Eloquent JavaScript</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-book">Libro</span> <span class="tag tag-lang">Español</span> <span class="tag tag-os">Open Source</span></div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Recursos Git y GitHub -->
+        <div class="resource-card">
+          <h3>Git y Control de Versiones</h3>
+          <ul class="resource-list">
+            <li id="res-17">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-17" data-target="res-17">
+                <label for="chk-res-17"><a href="https://learngitbranching.js.org/?locale=es_ES" target="_blank">Learn Git Branching (Juego Visual)</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-game">Juego</span> <span class="tag tag-lang">Español</span> <span class="tag tag-os">Open Source</span></div>
+            </li>
+            <li id="res-18">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-18" data-target="res-18">
+                <label for="chk-res-18"><a href="https://git-scm.com/book/es/v2" target="_blank">Libro Oficial Pro Git</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-book">Libro</span> <span class="tag tag-lang">Español</span> <span class="tag tag-os">Open Source</span></div>
+            </li>
+            <li id="res-19">
+              <div class="resource-header">
+                <input type="checkbox" class="task-check" id="chk-res-19" data-target="res-19">
+                <label for="chk-res-19"><a href="https://www.atlassian.com/es/git/tutorials/what-is-version-control" target="_blank">Tutoriales Git de Atlassian</a></label>
+              </div>
+              <div class="tag-container"><span class="tag tag-lang">Español</span></div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MÓDULO 0: GIT Y GITHUB -->
+    <section id="git-basico" class="module-section">
+      <h2 class="module-title">Módulo 0: Preparación del Entorno (Git & GitHub)</h2>
+
+      <article class="exercise-card" id="ex-git-1">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Configuración</span> Tu Portafolio de Entrenamiento</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-git-1"> Completado
+          </label>
+        </div>
+        <p>Para poder evaluar tu progreso, necesitamos que guardes todo tu código utilizando Git. Por favor, sigue estos pasos antes de iniciar los ejercicios de HTML, CSS y JS:</p>
+        <ol>
+          <li>Si no tienes una cuenta, crea una cuenta gratuita en <a href="https://github.com/" target="_blank">GitHub</a> o en <a href="https://about.gitlab.com/" target="_blank">GitLab</a> (la plataforma que prefieras).</li>
+          <li>Una vez dentro de tu cuenta, crea un nuevo repositorio público.</li>
+          <li>Es muy importante que nombres a este repositorio exactamente así: <code>tambourine-training</code></li>
+          <li>A medida que vayas resolviendo los ejercicios de los módulos siguientes, ve subiendo los archivos en subcarpetas (HTML, CSS y JS) a este repositorio.</li>
+          <li>Cuando termines tu entrenamiento, comparte el enlace de tu repositorio con el lider del equipo de producción para que pueda revisar tus avances.</li>
+        </ol>
+      </article>
+    </section>
+
+    <!-- MÓDULO 1: HTML SEMÁNTICO -->
+    <section id="html-semantico" class="module-section">
+      <h2 class="module-title">Módulo 1: HTML Semántico (Dándole sentido a la web)</h2>
+      
+      <article class="exercise-card" id="ex-html-1">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 1</span> El esqueleto de un artículo de Blog</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-html-1"> Completado
+          </label>
+        </div>
+        <p>¡Hola! Imagina que vamos a construir la página principal de un blog. En lugar de usar puros <code>&lt;div&gt;</code>, vamos a usar etiquetas que describen exactamente qué hay adentro. Tu misión es armar la estructura de la página. Te doy unas pistas:</p>
+        <ul>
+          <li>Usa un <code>&lt;header&gt;</code> para la cabecera principal, y adentro pon un menú de navegación usando <code>&lt;nav&gt;</code>.</li>
+          <li>Para el contenido principal, usa <code>&lt;main&gt;</code>.</li>
+          <li>Dentro del main, el artículo en sí debería ir en un <code>&lt;article&gt;</code> (¡este también puede tener su propio header para el título y la fecha!).</li>
+          <li>Añade una barra lateral con enlaces recomendados usando <code>&lt;aside&gt;</code>.</li>
+          <li>Finalmente, cierra la página con un pie de página usando <code>&lt;footer&gt;</code>. ¡Intenta armar este rompecabezas!</li>
+        </ul>
+      </article>
+
+      <article class="exercise-card" id="ex-html-2">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 2</span> Un Formulario Accesible</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-html-2"> Completado
+          </label>
+        </div>
+        <p>Casi todas las páginas necesitan un formulario de contacto. Vamos a crear uno muy sencillo para pedir: Nombre, Correo y un Mensaje. Lo importante aquí es la accesibilidad.</p>
+        <ul>
+          <li>Usa la etiqueta <code>&lt;form&gt;</code>.</li>
+          <li>Agrupa todo en un <code>&lt;fieldset&gt;</code> y ponle un título usando <code>&lt;legend&gt;</code>.</li>
+          <li>La clave de oro: cada cuadro de texto (<code>&lt;input&gt;</code> o <code>&lt;textarea&gt;</code>) debe tener un <code>&lt;label&gt;</code>. Para conectarlos, el atributo <code>for</code> del label debe ser exactamente igual al <code>id</code> del input. ¡Anímate a intentarlo!</li>
+        </ul>
+      </article>
+
+      <article class="exercise-card" id="ex-html-3">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 3</span> Preguntas Frecuentes (¡Magia sin JS!)</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-html-3"> Completado
+          </label>
+        </div>
+        <p>¿Has visto esas secciones de 'Preguntas Frecuentes' donde tocas una pregunta y se despliega la respuesta hacia abajo? ¡Podemos hacer eso solo con HTML, sin programar nada más!</p>
+        <p>Te presento a dos etiquetas geniales: <code>&lt;details&gt;</code> y <code>&lt;summary&gt;</code>. Crea una sección de preguntas con dos preguntas. El summary será la pregunta (lo que siempre se ve), y el texto debajo será la respuesta (que estará oculta hasta que le hagas clic). ¡Pruébalo!</p>
+      </article>
+
+      <article class="exercise-card" id="ex-html-4">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 4</span> Ordenando datos en una Tabla</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-html-4"> Completado
+          </label>
+        </div>
+        <p>A veces necesitamos mostrar información muy estructurada, como en un Excel. Vamos a crear una pequeña tabla con los lenguajes de programación que estás aprendiendo. Tu tabla debe tener columnas para: 'Lenguaje', 'Nivel' y 'Uso principal'.</p>
+        <ul>
+          <li>Empieza con <code>&lt;table&gt;</code>.</li>
+          <li>Usa <code>&lt;thead&gt;</code> para agrupar los títulos de las columnas (los títulos van en etiquetas <code>&lt;th&gt;</code>).</li>
+          <li>Usa <code>&lt;tbody&gt;</code> para el contenido de la tabla (los datos normales van en <code>&lt;td&gt;</code>).</li>
+          <li>Recuerda que cada fila debe ir envuelta en un <code>&lt;tr&gt;</code>.</li>
+        </ul>
+      </article>
+
+      <article class="exercise-card" id="ex-html-5">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 5</span> Enmarcando una Imagen</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-html-5"> Completado
+          </label>
+        </div>
+        <p>Cuando ponemos una imagen en un artículo, a veces queremos ponerle un pequeño texto debajo que la describa. Semánticamente, no deberíamos dejar la imagen y el texto sueltos.</p>
+        <ul>
+          <li>Usa la etiqueta <code>&lt;figure&gt;</code> como si fuera el marco del cuadro.</li>
+          <li>Adentro pon tu etiqueta <code>&lt;img&gt;</code>.</li>
+          <li>Debajo de la imagen, usa la etiqueta <code>&lt;figcaption&gt;</code> para poner el texto de la leyenda.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- MÓDULO 2: CSS & SCSS -->
+    <section id="css-scss" class="module-section">
+      <h2 class="module-title">Módulo 2: CSS & SCSS (Dándole estilo a la web)</h2>
+      
+      <article class="exercise-card" id="ex-css-1">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 1</span> Tu primera Tarjeta con Flexbox</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-css-1"> Completado
+          </label>
+        </div>
+        <p>¡Vamos a darle estilo a las cosas! Crea un <code>&lt;div&gt;</code> con la clase <code>.card</code>. En tu CSS:</p>
+        <ol>
+          <li>Dale un ancho máximo (ej. 300px), un color de fondo blanco, bordes redondeados y una sombra suave.</li>
+          <li>Adentro de la tarjeta pon un texto. Para que ese texto quede perfectamente centrado usa Flexbox en la clase <code>.card</code> (display: flex;). Explora las propiedades justify-content y align-items.</li>
+        </ol>
+      </article>
+
+      <article class="exercise-card" id="ex-css-2">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 2</span> Galería Responsiva (CSS Grid)</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-css-2"> Completado
+          </label>
+        </div>
+        <p>Crea un contenedor para una galería (<code>.gallery-container</code>) con <code>display: grid;</code>. Tu misión es investigar e implementar esta línea de código: <code>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));</code>. ¡No vas a necesitar usar media queries!</p>
+      </article>
+
+      <article class="exercise-card" id="ex-css-3">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 3</span> Botón Interactivo con Vida</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-css-3"> Completado
+          </label>
+        </div>
+        <p>Crea un botón y dale un color de fondo, color de texto y quítale los bordes que trae por defecto.</p>
+        <p>Luego, usa la pseudo-clase <code>:hover</code> para cambiar su color de fondo al pasar el ratón. <strong>El toque secreto:</strong> añádele a la clase principal la propiedad <code>transition: background-color 0.3s ease;</code> para que el cambio de color sea suave.</p>
+      </article>
+
+      <article class="exercise-card" id="ex-css-4">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 4</span> Superpoderes SCSS (Anidamiento)</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-css-4"> Completado
+          </label>
+        </div>
+        <p>SCSS es como CSS pero con superpoderes. Tu reto:</p>
+        <ol>
+          <li>Crea una variable llamada <code>$primary-color: #a6192e;</code> en tu archivo SCSS.</li>
+          <li>Crea una barra de navegación (<code>.navbar</code>). Usa esa variable para el fondo.</li>
+          <li>En lugar de escribir selectores separados (como .navbar ul), anida esas etiquetas *dentro* de las llaves de .navbar.</li>
+        </ol>
+      </article>
+
+      <article class="exercise-card" id="ex-css-5">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 5</span> Mixins en SCSS (Tu propia plantilla)</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-css-5"> Completado
+          </label>
+        </div>
+        <p>Crea un mixin llamado <code>flex-center</code> y pon las reglas de Flexbox para centrar. Luego, crea un div con la clase <code>.hero-section</code> y 'pega' ese mixin usando la palabra clave <code>@include flex-center;</code>.</p>
+      </article>
+    </section>
+
+    <!-- MÓDULO 3: JAVASCRIPT BÁSICO -->
+    <section id="js-basico" class="module-section">
+      <h2 class="module-title">Módulo 3: JavaScript (Dándole interactividad)</h2>
+
+      <article class="exercise-card" id="ex-js-1">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 1</span> Haciendo que la página escuche (DOM)</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-js-1"> Completado
+          </label>
+        </div>
+        <p>¡Bienvenido a JavaScript! Tenemos un botón en el HTML con <code>id='btn-saludar'</code> y un párrafo vacío con <code>id='mensaje'</code>. Queremos que al hacer clic, se muestre un saludo.</p>
+        <ol>
+          <li>Atrapa al botón y al párrafo usando <code>document.getElementById()</code>.</li>
+          <li>Dile al botón que escuche los clics usando <code>.addEventListener('click', ...)</code>.</li>
+          <li>Adentro de la función, cambia el <code>.textContent</code> del párrafo.</li>
+        </ol>
+      </article>
+
+      <article class="exercise-card" id="ex-js-2">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 2</span> El Contador de clics</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-js-2"> Completado
+          </label>
+        </div>
+        <p>Vamos a hacer un clásico: un contador. Necesitas un número en la pantalla y tres botones: 'Sumar', 'Restar' y 'Reiniciar'.</p>
+        <ul>
+          <li>Crea una variable <code>let contador = 0</code>.</li>
+          <li>Cuando le den a 'Sumar', agrégale 1 al contador y actualiza el texto en pantalla.</li>
+          <li>Cuando le den a 'Restar', quítale 1 (¡Bonus: usa un <code>if</code> para evitar que baje de cero!).</li>
+          <li>Cuando le den a 'Reiniciar', vuelve el contador a 0.</li>
+        </ul>
+      </article>
+
+      <article class="exercise-card" id="ex-js-3">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 3</span> Filtrando una lista de contactos</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-js-3"> Completado
+          </label>
+        </div>
+        <p>Imagina que tienes este arreglo: <code>const usuarios = [{nombre: 'Ana', rol: 'admin'}, {nombre: 'Luis', rol: 'user'}];</code></p>
+        <p>Necesito que me ayudes a crear un nuevo arreglo que SOLO contenga a los administradores (admin). Pista: investiga el método <code>.filter()</code> en JavaScript.</p>
+      </article>
+
+      <article class="exercise-card" id="ex-js-4">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 4</span> El guardián del Formulario</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-js-4"> Completado
+          </label>
+        </div>
+        <p>Tienes un formulario con un campo de contraseña (<code>id='password'</code>). Queremos que cuando el usuario intente enviar el formulario (evento <code>submit</code>), JavaScript revise si la contraseña tiene al menos 6 letras.</p>
+        <p>Si tiene menos, debes detener el envío de la página. Pista de oro: usa <code>evento.preventDefault()</code> dentro de un if y muestra una alerta.</p>
+      </article>
+
+      <article class="exercise-card" id="ex-js-5">
+        <div class="exercise-card-header">
+          <h3><span class="badge">Ej 5</span> Mostrar / Ocultar Contraseña</h3>
+          <label class="completion-label">
+            <input type="checkbox" class="task-check" data-target="ex-js-5"> Completado
+          </label>
+        </div>
+        <p>En HTML tienes un <code>&lt;input type='password' id='clave'&gt;</code> y un botón 'Ver'.</p>
+        <p>Tu misión: Cuando le den clic al botón, haz que JS revise la propiedad <code>type</code> del input. Si es 'password', cámbialo a 'text'. ¡Al darle clic otra vez, debe regresar a ser 'password'!</p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Entrenamiento de Desarrollo Web. Creado para el equipo técnico.</p>
+  </footer>
+
+  <!-- SCRIPT PARA GUARDAR EL PROGRESO -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const checkboxes = document.querySelectorAll('.task-check');
+      
+      // Función para aplicar los estilos visuales de completado
+      const toggleVisualCompletion = (targetId, isCompleted) => {
+        const element = document.getElementById(targetId);
+        if(element) {
+          if(isCompleted) {
+            element.classList.add('completed');
+          } else {
+            element.classList.remove('completed');
+          }
+        }
+      };
+
+      // 1. Cargar el estado guardado al abrir la página
+      checkboxes.forEach(cb => {
+        const targetId = cb.getAttribute('data-target');
+        const savedState = localStorage.getItem('tambo_training_' + targetId);
+        
+        if(savedState === 'true') {
+          cb.checked = true;
+          toggleVisualCompletion(targetId, true);
+        }
+
+        // 2. Escuchar cambios cuando el pasante marca/desmarca
+        cb.addEventListener('change', (e) => {
+          const isChecked = e.target.checked;
+          // Guardar en la memoria del navegador
+          localStorage.setItem('tambo_training_' + targetId, isChecked);
+          // Cambiar el aspecto visual
+          toggleVisualCompletion(targetId, isChecked);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
