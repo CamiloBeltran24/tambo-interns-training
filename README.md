@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://www.tambourine.com/assets/svg/logo-tambo-complete.svg" alt="Tambo Logo" width="350">
+</p>
+
 # 🚀 Tambo Interns Training
 
 > 👋 **Welcome aboard!** 
