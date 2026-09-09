@@ -26,9 +26,18 @@
   ```bash
   git clone [https://github.com/your-username/repository-name.git](https://github.com/your-username/repository-name.git)
   ```
-## ======
+**4. 📂 Access the project directory
+* Enter the newly downloaded folder by running:
+* ```bash
+  cd repository-name
+  ```
+  
+** 5. ✨ Start working!
+* You are all set! Open the folder in your code editor and begin your first tasks. Happy coding!
 
-  # 🚀 Tambo Interns Training Español
+## VERSION EN ESPAÑOL
+
+# 🚀 Tambo Interns Training Español
 
 > 👋 **¡Bienvenido/a a bordo!** 
 > Este repositorio está diseñado como tu primer contacto con el desarrollo web y servirá como base para todo lo que aprenderás y trabajarás durante tus próximos meses en la compañía. 
@@ -56,3 +65,16 @@
   ```bash
   git clone [https://github.com/tu-usuario/nombre-del-repositorio.git](https://github.com/tu-usuario/nombre-del-repositorio.git)
   ```
+
+** 4. 📂 Accede al directorio del proyecto
+* Entra a la carpeta que se acaba de descargar ejecutando:
+* ```bash
+  cd nombre-del-repositorio
+  ```
+* abre el proyecto en VScode con el comando
+* ```bash
+  code .
+  ```
+
+** 5. ✨ ¡Empieza a trabajar!
+* ¡Todo listo! Abre la carpeta en tu editor de código y comienza tus primeras tareas. ¡Feliz programación!
