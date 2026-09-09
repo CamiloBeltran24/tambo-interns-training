@@ -17,7 +17,7 @@
 **2. 🔗 Copy the URL of your new Fork**
 * Go to the newly created repository in your account.
 * Click the green **Code** button.
-* Copy the provided URL (you can use HTTPS or SSH), Ask if you have problems with this step.
+* Copy the provided URL (you can use HTTPS or SSH).
 
 **3. 💻 Clone the repository to your local machine**
 * Open your terminal or command line.
